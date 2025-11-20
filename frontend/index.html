@@ -9,18 +9,18 @@
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #0a1016;
-      --panel: #101826;
-      --panel-strong: #0d141d;
-      --panel-soft: #131d2b;
-      --stroke: #1f2b3a;
-      --text: #e8eef5;
-      --muted: #93a5ba;
+      --bg: #05090f;
+      --panel: #0c121b;
+      --panel-2: #0f1621;
+      --stroke: #1c2734;
+      --text: #e7edf4;
+      --muted: #8ea0b5;
       --accent: #ff8a3d;
       --accent-2: #16d6a3;
       --accent-3: #5ab5ff;
-      --card-radius: 16px;
-      --shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+      --accent-4: #c6d2ff;
+      --card-radius: 18px;
+      --shadow: 0 22px 70px rgba(0, 0, 0, 0.42);
     }
     * { box-sizing: border-box; }
     body {
@@ -28,731 +28,621 @@
       min-height: 100vh;
       font-family: 'Manrope', system-ui, -apple-system, sans-serif;
       color: var(--text);
-      background: radial-gradient(circle at 20% 20%, rgba(22, 214, 163, 0.08), transparent 32%),
-                  radial-gradient(circle at 80% 0%, rgba(255, 138, 61, 0.1), transparent 35%),
-                  #05080d;
+      background: radial-gradient(circle at 16% 16%, rgba(22, 214, 163, 0.08), transparent 34%),
+                  radial-gradient(circle at 82% 0%, rgba(255, 138, 61, 0.08), transparent 38%),
+                  #05090f;
       position: relative;
       overflow-x: hidden;
     }
     body::before, body::after {
       content: "";
       position: absolute;
-      filter: blur(90px);
-      opacity: 0.6;
-      z-index: 0;
       pointer-events: none;
+      z-index: 0;
+      filter: blur(100px);
+      opacity: 0.6;
     }
     body::before {
-      width: 260px; height: 260px;
-      top: 80px; left: 40%;
-      background: radial-gradient(circle, rgba(255, 138, 61, 0.35), transparent 65%);
+      width: 360px; height: 360px;
+      top: 90px; left: 32%;
+      background: radial-gradient(circle, rgba(255, 138, 61, 0.24), transparent 70%);
     }
     body::after {
-      width: 320px; height: 320px;
-      bottom: 50px; right: 10%;
-      background: radial-gradient(circle, rgba(90, 181, 255, 0.28), transparent 70%);
+      width: 420px; height: 420px;
+      bottom: -60px; right: 8%;
+      background: radial-gradient(circle, rgba(90, 181, 255, 0.2), transparent 72%);
     }
-    .app-shell {
-      position: relative;
-      z-index: 1;
-      display: grid;
-      grid-template-columns: 310px 1fr;
-      min-height: 100vh;
-    }
-    aside.sidebar {
-      background: linear-gradient(180deg, rgba(16, 24, 38, 0.95), rgba(13, 20, 29, 0.96));
-      border-right: 1px solid var(--stroke);
-      padding: 28px 24px;
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-      position: sticky;
-      top: 0;
-      min-height: 100vh;
-    }
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-family: 'Space Grotesk', 'Manrope', sans-serif;
-      letter-spacing: 0.08em;
-      font-weight: 700;
-      text-transform: uppercase;
-      font-size: 18px;
-    }
-    .beta {
-      background: rgba(255, 138, 61, 0.16);
-      color: var(--accent);
-      padding: 4px 10px;
-      border-radius: 999px;
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      border: 1px solid rgba(255, 138, 61, 0.3);
-    }
-    .sidebar .intro {
-      color: var(--muted);
-      font-size: 14px;
-      line-height: 1.5;
-    }
-    nav.nav-stack {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-    .nav-item {
-      width: 100%;
-      border: 1px solid var(--stroke);
-      background: linear-gradient(120deg, rgba(31, 43, 58, 0.45), rgba(16, 24, 38, 0.8));
-      color: var(--text);
-      padding: 14px 12px;
-      border-radius: 14px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      cursor: pointer;
-      transition: transform 160ms ease, border-color 160ms ease, background 160ms ease;
-      position: relative;
-    }
-    .nav-item:hover {
-      transform: translateX(2px);
-      border-color: rgba(255, 138, 61, 0.6);
-    }
-    .nav-item .icon {
-      width: 34px; height: 34px;
-      border-radius: 10px;
-      background: linear-gradient(140deg, rgba(255, 138, 61, 0.22), rgba(90, 181, 255, 0.14));
-      display: grid;
-      place-items: center;
-      font-weight: 700;
-      color: var(--text);
-      font-family: 'Space Grotesk', 'Manrope', sans-serif;
-    }
-    .nav-item .soon-pill {
-      margin-left: auto;
-      background: rgba(255, 138, 61, 0.18);
-      color: var(--accent);
-      padding: 4px 9px;
-      border-radius: 999px;
-      font-size: 11.5px;
-      border: 1px solid rgba(255, 138, 61, 0.35);
-    }
-    .sidebar-foot {
-      margin-top: auto;
-      border: 1px solid var(--stroke);
-      border-radius: 14px;
-      padding: 14px 12px;
-      background: linear-gradient(160deg, rgba(31, 43, 58, 0.5), rgba(16, 24, 38, 0.9));
-    }
-    .sidebar-foot .label {
-      font-size: 12px;
-      color: var(--muted);
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      margin-bottom: 8px;
-    }
-    .sidebar-foot .cta {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      background: linear-gradient(120deg, #ff8a3d, #ff6b6b);
-      color: #0a0f14;
-      padding: 10px 12px;
-      border-radius: 12px;
-      font-weight: 700;
-      text-decoration: none;
-      border: none;
-      cursor: pointer;
-    }
-    main.content {
-      padding: 28px;
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-      background: linear-gradient(180deg, rgba(5, 8, 13, 0.8), rgba(5, 8, 13, 0.9));
-    }
-    .top-bar {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 12px;
-    }
-    .title-block h1 {
-      margin: 0;
-      font-size: clamp(24px, 3vw, 28px);
-      letter-spacing: -0.01em;
-      font-family: 'Space Grotesk', 'Manrope', sans-serif;
-    }
-    .title-block p {
-      margin: 4px 0 0;
-      color: var(--muted);
-      font-size: 14px;
-    }
-    .chip {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 12px;
-      border-radius: 999px;
-      border: 1px solid var(--stroke);
-      color: var(--muted);
-      background: rgba(19, 29, 43, 0.8);
-      font-size: 13px;
-    }
-    .chip strong { color: var(--text); }
-    .layout-grid {
-      display: grid;
-      grid-template-columns: 1.1fr 1fr;
-      gap: 16px;
-    }
-    .card {
-      background: linear-gradient(145deg, rgba(19, 29, 43, 0.9), rgba(13, 20, 29, 0.95));
-      border: 1px solid var(--stroke);
-      border-radius: var(--card-radius);
-      padding: 18px;
-      position: relative;
-      box-shadow: var(--shadow);
-      overflow: hidden;
-    }
-    .card::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(circle at 80% 20%, rgba(255, 138, 61, 0.08), transparent 45%),
-                  radial-gradient(circle at 10% 30%, rgba(90, 181, 255, 0.08), transparent 40%);
-      pointer-events: none;
-    }
-    .card h2 {
-      margin: 0;
-      font-size: 18px;
-      letter-spacing: -0.01em;
-    }
-    .card p { margin: 6px 0 0; color: var(--muted); font-size: 14px; }
+    main { position: relative; z-index: 1; }
+    h1, h2, h3, h4 { font-family: 'Space Grotesk', 'Manrope', sans-serif; letter-spacing: -0.02em; }
+    button { font-family: inherit; }
     .pill {
       display: inline-flex;
       align-items: center;
       gap: 8px;
       padding: 6px 10px;
       border-radius: 999px;
-      font-size: 12px;
-      letter-spacing: 0.02em;
-      text-transform: uppercase;
       border: 1px solid rgba(255, 255, 255, 0.12);
-      background: rgba(16, 24, 38, 0.8);
+      background: rgba(255, 255, 255, 0.04);
+      font-size: 12px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--muted);
     }
-    .pill.orange { color: var(--accent); border-color: rgba(255, 138, 61, 0.4); background: rgba(255, 138, 61, 0.12); }
-    .pill.teal { color: var(--accent-2); border-color: rgba(22, 214, 163, 0.5); background: rgba(22, 214, 163, 0.14); }
-    .pill.blue { color: var(--accent-3); border-color: rgba(90, 181, 255, 0.5); background: rgba(90, 181, 255, 0.12); }
-    .hero {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 16px;
-    }
-    .hero-main h1 {
-      font-size: clamp(30px, 3.4vw, 36px);
-      margin: 10px 0 8px;
-      letter-spacing: -0.03em;
-      font-family: 'Space Grotesk', 'Manrope', sans-serif;
-    }
-    .hero-main .actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 14px;
-    }
-    .btn {
-      border: none;
-      cursor: pointer;
-      border-radius: 12px;
-      padding: 12px 14px;
+    .pill.tiny { padding: 4px 8px; font-size: 11px; letter-spacing: 0.04em; }
+    .pill.ghost { background: rgba(255, 255, 255, 0.03); border-color: rgba(255, 255, 255, 0.08); }
+    .primary {
+      border: 1px solid rgba(255, 138, 61, 0.7);
+      background: linear-gradient(120deg, rgba(255, 138, 61, 0.32), rgba(22, 214, 163, 0.2));
+      color: var(--text);
+      padding: 14px 18px;
+      border-radius: 14px;
       font-weight: 700;
       letter-spacing: 0.01em;
+      cursor: pointer;
+      transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease, opacity 160ms ease;
+      box-shadow: 0 10px 32px rgba(255, 138, 61, 0.25);
+    }
+    .primary.full { width: 100%; }
+    .primary:hover { transform: translateY(-2px); border-color: rgba(255, 138, 61, 0.9); }
+    .primary:active { transform: translateY(0); box-shadow: 0 6px 24px rgba(255, 138, 61, 0.18); }
+    .muted { color: var(--muted); }
+    .eyebrow {
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-size: 11px;
+      color: var(--muted);
+      margin: 0 0 10px;
+    }
+    .micro { font-size: 13px; color: var(--muted); margin: 6px 0 0; }
+    .logo-mark {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      color: var(--text);
-      background: linear-gradient(120deg, rgba(255, 138, 61, 0.34), rgba(22, 214, 163, 0.24));
-      border: 1px solid rgba(255, 138, 61, 0.4);
-      transition: transform 150ms ease, box-shadow 150ms ease, border-color 150ms ease;
-    }
-    .btn:hover { transform: translateY(-1px); box-shadow: 0 10px 32px rgba(255, 138, 61, 0.25); }
-    .badge-stack {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 12px;
-    }
-    .stat-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
       gap: 10px;
-      margin-top: 12px;
-    }
-    .stat {
-      padding: 12px;
-      border: 1px solid var(--stroke);
+      padding: 10px 14px;
       border-radius: 12px;
-      background: rgba(19, 29, 43, 0.7);
-    }
-    .stat .label {
-      color: var(--muted);
-      font-size: 12px;
-      letter-spacing: 0.02em;
-      text-transform: uppercase;
-    }
-    .stat .value {
-      font-size: 20px;
+      border: 1px solid var(--stroke);
+      background: rgba(255, 255, 255, 0.02);
+      font-family: 'Space Grotesk', 'Manrope', sans-serif;
       font-weight: 700;
-      margin-top: 6px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .stat .trend {
-      color: var(--accent);
-      font-size: 12px;
-      padding: 4px 8px;
-      border-radius: 999px;
-      background: rgba(255, 138, 61, 0.12);
-      border: 1px solid rgba(255, 138, 61, 0.3);
-    }
-    .mini-chart {
-      margin-top: 14px;
-      display: grid;
-      gap: 6px;
-      grid-template-columns: repeat(6, 1fr);
-    }
-    .mini-bar {
-      height: 48px;
-      border-radius: 8px;
-      background: linear-gradient(180deg, rgba(22, 214, 163, 0.8), rgba(16, 24, 38, 0.8));
-      border: 1px solid rgba(22, 214, 163, 0.4);
-    }
-    .feature-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 12px;
-    }
-    .feature-card {
-      padding: 14px;
-      border: 1px solid var(--stroke);
-      border-radius: 14px;
-      background: linear-gradient(160deg, rgba(19, 29, 43, 0.88), rgba(13, 20, 29, 0.92));
-      position: relative;
-      overflow: hidden;
-      cursor: pointer;
-      transition: border-color 160ms ease, transform 160ms ease;
-    }
-    .feature-card:hover { border-color: rgba(22, 214, 163, 0.4); transform: translateY(-1px); }
-    .feature-card h3 { margin: 0; font-size: 16px; }
-    .feature-card p { margin: 6px 0 0; font-size: 13px; color: var(--muted); }
-    .feature-card .soon-banner {
-      position: absolute;
-      top: 12px; right: 12px;
-      background: rgba(255, 138, 61, 0.2);
-      color: var(--accent);
-      padding: 4px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(255, 138, 61, 0.35);
-      font-size: 11px;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
-      letter-spacing: 0.02em;
     }
-    .feature-card .meta-row {
+    .logo-mark.small { padding: 8px 12px; font-size: 12px; letter-spacing: 0.12em; }
+    .surface {
+      border: 1px solid var(--stroke);
+      background: linear-gradient(160deg, rgba(12, 18, 27, 0.92), rgba(12, 18, 27, 0.82));
+      box-shadow: var(--shadow);
+      border-radius: var(--card-radius);
+    }
+    .intro-screen {
+      position: fixed;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      padding: 32px 18px;
+      z-index: 3;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity 220ms ease, visibility 0s linear 220ms;
+    }
+    body[data-state="intro"] .intro-screen {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+      transition: opacity 220ms ease, visibility 0s linear 0s;
+    }
+    .intro-desktop {
+      place-items: center;
+      padding: 48px 32px;
+    }
+    .intro-desktop .frame {
+      width: min(1080px, 90vw);
+      padding: 34px 30px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      align-items: center;
+      gap: 26px;
+    }
+    .intro-desktop h1 {
+      margin: 6px 0 12px;
+      font-size: clamp(28px, 3.2vw, 36px);
+      line-height: 1.1;
+    }
+    .intro-desktop .cta-stack { display: flex; flex-direction: column; gap: 12px; align-items: flex-start; }
+    .intro-mobile {
+      padding: 36px 22px 26px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      gap: 18px;
+    }
+    .intro-mobile .surface {
+      width: min(460px, 100%);
+      padding: 30px 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      align-items: center;
+    }
+    .intro-mobile h2 {
+      margin: 6px 0 0;
+      font-size: 22px;
+      letter-spacing: -0.02em;
+    }
+    .desktop-shell {
+      display: none;
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 32px 24px 72px;
+      position: relative;
+      z-index: 1;
+    }
+    body[data-state="dashboard"] .desktop-shell,
+    body[data-state="detail"] .desktop-shell { display: block; }
+    .shell-header {
       display: flex;
       align-items: center;
-      gap: 10px;
-      margin-top: 14px;
-      flex-wrap: wrap;
-    }
-    .tag {
-      padding: 6px 10px;
-      border-radius: 10px;
-      font-size: 12px;
-      color: var(--muted);
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-    }
-    .timeline {
-      display: flex;
+      justify-content: space-between;
       gap: 12px;
-      margin-top: 14px;
+      margin-bottom: 18px;
     }
-    .timeline .node {
-      flex: 1;
-      padding: 12px;
+    .chip-lite {
+      padding: 8px 12px;
       border-radius: 12px;
-      border: 1px dashed rgba(255, 255, 255, 0.1);
-      background: rgba(19, 29, 43, 0.7);
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
       font-size: 13px;
-      color: var(--muted);
     }
-    .mobile-preview {
+    .card-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 12px;
-      align-items: stretch;
+      gap: 14px;
     }
-    .phone-frame {
+    .tile {
       border: 1px solid var(--stroke);
-      border-radius: 24px;
-      padding: 14px;
-      background: linear-gradient(180deg, rgba(16, 24, 38, 0.95), rgba(13, 20, 29, 0.96));
+      border-radius: var(--card-radius);
+      background: linear-gradient(145deg, rgba(12, 18, 27, 0.94), rgba(15, 22, 33, 0.9));
+      padding: 18px;
       position: relative;
-      min-height: 260px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-    .phone-frame .notch {
-      width: 68%;
-      height: 10px;
-      background: rgba(255, 255, 255, 0.09);
-      border-radius: 0 0 18px 18px;
-      align-self: center;
-    }
-    .phone-frame .mobile-stage {
-      flex: 1;
-      border: 1px solid var(--stroke);
-      border-radius: 16px;
-      padding: 12px;
-      background: linear-gradient(150deg, rgba(31, 43, 58, 0.7), rgba(16, 24, 38, 0.9));
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-    .phone-frame .bottom-bar {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 8px;
-      padding: 10px;
-      background: rgba(13, 20, 29, 0.9);
-      border-radius: 14px;
-      border: 1px solid var(--stroke);
-    }
-    .phone-frame .bottom-item {
-      text-align: center;
-      font-size: 12px;
+      overflow: hidden;
+      text-align: left;
       color: var(--text);
-      padding: 8px;
+      cursor: pointer;
+      transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease, background 160ms ease;
+    }
+    .tile::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 18% 20%, rgba(255, 255, 255, 0.06), transparent 46%);
+      opacity: 0.6;
+      pointer-events: none;
+    }
+    .tile:hover { transform: translateY(-4px); border-color: rgba(90, 181, 255, 0.4); box-shadow: 0 18px 40px rgba(0,0,0,0.35); }
+    .tile:active { transform: translateY(-2px); }
+    .tile .tile-top {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .tile h3 { margin: 0; font-size: 18px; letter-spacing: -0.01em; }
+    .tile p { margin: 6px 0 0; color: var(--muted); font-size: 13px; }
+    .glyph {
+      width: 42px; height: 42px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
       border-radius: 12px;
       background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: var(--text);
+      flex-shrink: 0;
     }
-    .phone-frame .bottom-item .flag {
-      display: block;
-      margin-top: 6px;
-      font-size: 11px;
-      color: var(--accent);
+    .tile .pill { margin-left: auto; }
+    .theme-home { --tile-accent: var(--accent-3); }
+    .theme-reels { --tile-accent: #7f85ff; }
+    .theme-tuning { --tile-accent: var(--accent); }
+    .theme-profile { --tile-accent: var(--accent-2); }
+    .tile.theme-home { background: linear-gradient(160deg, rgba(12, 18, 27, 0.92), rgba(12, 18, 27, 0.82)), radial-gradient(circle at 80% 0%, rgba(90, 181, 255, 0.08), transparent 52%); }
+    .tile.theme-reels { background: linear-gradient(160deg, rgba(12, 18, 27, 0.94), rgba(12, 18, 27, 0.82)), radial-gradient(circle at 70% 12%, rgba(127, 133, 255, 0.12), transparent 52%); }
+    .tile.theme-tuning { background: linear-gradient(160deg, rgba(12, 18, 27, 0.94), rgba(12, 18, 27, 0.82)), radial-gradient(circle at 18% 20%, rgba(255, 138, 61, 0.14), transparent 52%); }
+    .tile.theme-profile { background: linear-gradient(160deg, rgba(12, 18, 27, 0.94), rgba(12, 18, 27, 0.82)), radial-gradient(circle at 14% 10%, rgba(22, 214, 163, 0.12), transparent 52%); }
+    .detail-screen {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(5, 9, 15, 0.82);
+      backdrop-filter: blur(10px);
+      z-index: 5;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
     }
-    nav.mobile-nav {
+    body[data-state="detail"] .detail-screen { display: flex; }
+    .detail-card {
+      width: min(520px, 90vw);
+      padding: 28px 24px;
+      border-radius: 16px;
+      border: 1px solid var(--stroke);
+      background: linear-gradient(150deg, rgba(12, 18, 27, 0.96), rgba(12, 18, 27, 0.88));
+      box-shadow: var(--shadow);
+      text-align: center;
+    }
+    .back-link {
+      background: none;
+      border: none;
+      color: var(--muted);
+      cursor: pointer;
+      font-size: 14px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 16px;
+      padding: 4px 6px;
+    }
+    .back-link:hover { color: var(--text); }
+    .detail-icon {
+      width: 56px; height: 56px;
+      margin: 0 auto 14px;
+      display: grid;
+      place-items: center;
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      background: rgba(255, 255, 255, 0.05);
+    }
+    .detail-label {
+      letter-spacing: 0.16em;
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+    .detail-title {
+      font-size: 20px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin: 0;
+    }
+    .mobile-shell {
+      display: none;
+      min-height: 100vh;
+      padding: 28px 18px 110px;
+      position: relative;
+      z-index: 1;
+    }
+    body[data-state="dashboard"] .mobile-shell { display: flex; }
+    .mobile-shell .mobile-stage {
+      flex: 1;
+      margin-top: 22px;
+      border: 1px solid var(--stroke);
+      border-radius: 20px;
+      padding: 32px 18px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: linear-gradient(165deg, rgba(12, 18, 27, 0.88), rgba(12, 18, 27, 0.78));
+      text-align: center;
+    }
+    .mobile-shell .stage-icon {
+      width: 52px; height: 52px;
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.05);
+      display: grid;
+      place-items: center;
+      margin-bottom: 6px;
+    }
+    .soon-callout {
+      font-size: 17px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin: 0;
+    }
+    .stage-label { color: var(--muted); font-size: 14px; }
+    .bottom-nav {
       position: fixed;
       bottom: 16px;
       left: 50%;
       transform: translateX(-50%);
-      width: min(480px, calc(100% - 32px));
-      background: rgba(13, 20, 29, 0.95);
+      width: min(520px, calc(100% - 18px));
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      padding: 10px;
+      background: rgba(12, 18, 27, 0.95);
       border: 1px solid var(--stroke);
       border-radius: 22px;
-      padding: 10px 12px;
-      display: none;
-      gap: 10px;
       box-shadow: 0 14px 36px rgba(0, 0, 0, 0.35);
       backdrop-filter: blur(10px);
-      z-index: 10;
+      z-index: 3;
     }
-    .mobile-nav .mobile-link {
-      flex: 1;
+    .nav-button {
+      position: relative;
       border: 1px solid var(--stroke);
-      background: rgba(255, 255, 255, 0.04);
+      background: rgba(255, 255, 255, 0.03);
       border-radius: 14px;
-      padding: 8px 6px;
-      color: var(--text);
-      text-align: center;
-      font-size: 13px;
+      padding: 10px 8px 8px;
       display: grid;
-      gap: 4px;
+      place-items: center;
+      gap: 6px;
+      color: var(--muted);
       cursor: pointer;
+      transition: transform 120ms ease, border-color 120ms ease, background 120ms ease, color 120ms ease;
+      font-size: 12px;
     }
-    .mobile-nav .mobile-link .soon-dot {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      justify-content: center;
-      font-size: 11px;
-      color: var(--accent);
-    }
-    .toast {
-      position: fixed;
-      right: 16px;
-      bottom: 16px;
-      padding: 14px 16px;
-      border-radius: 14px;
-      background: rgba(13, 20, 29, 0.95);
-      border: 1px solid var(--stroke);
+    .nav-button .glyph { width: 30px; height: 30px; border-radius: 10px; }
+    .nav-button.active {
       color: var(--text);
-      box-shadow: 0 10px 26px rgba(0, 0, 0, 0.35);
-      opacity: 0;
-      transform: translateY(10px);
-      transition: opacity 180ms ease, transform 180ms ease;
-      pointer-events: none;
-      z-index: 20;
+      border-color: rgba(255, 138, 61, 0.6);
+      background: radial-gradient(circle at 50% 0%, rgba(255, 138, 61, 0.12), transparent 60%), rgba(255, 255, 255, 0.05);
+      transform: translateY(-1px);
     }
-    .toast.show {
-      opacity: 1;
-      transform: translateY(0);
+    .nav-button.active::after {
+      content: "";
+      position: absolute;
+      top: 6px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 24px;
+      height: 2px;
+      border-radius: 999px;
+      background: rgba(255, 138, 61, 0.8);
     }
-    @media (max-width: 1100px) {
-      .app-shell {
-        grid-template-columns: 1fr;
-      }
-      aside.sidebar {
-        display: none;
-      }
-      main.content {
-        padding-bottom: 100px;
-      }
+    .nav-button:active { transform: translateY(1px); }
+    .label { font-size: 12px; letter-spacing: 0.02em; }
+    @media (max-width: 820px) {
+      .desktop-shell { padding: 24px 16px 52px; }
+      .card-grid { gap: 10px; }
+      .tile { padding: 16px; }
     }
-    @media (max-width: 720px) {
-      nav.mobile-nav { display: flex; }
-      .layout-grid { grid-template-columns: 1fr; }
-      .hero-main h1 { font-size: 28px; }
+    @media (max-width: 760px) {
+      body[data-state="intro"] .intro-desktop { display: none !important; }
+      body[data-state="intro"] .intro-mobile { display: flex; }
+      .desktop-shell { display: none !important; }
+      body[data-state="detail"] .detail-screen { align-items: center; }
+    }
+    @media (min-width: 761px) {
+      body[data-state="intro"] .intro-mobile { display: none !important; }
+      .mobile-shell { display: none !important; }
     }
   </style>
 </head>
-<body>
-  <div class="app-shell">
-    <aside class="sidebar">
-      <div class="brand">Carilla <span class="beta">beta</span></div>
-      <div class="intro">
-        Carilla is your car hub to tune realistic builds, swap knowledge, share reels, and keep settings synced across laptop and phone.
+<body data-state="intro" data-feature="home">
+  <main>
+    <section class="intro-screen intro-desktop">
+      <div class="frame surface">
+        <div>
+          <div class="logo-mark">Carilla</div>
+          <p class="eyebrow" style="margin-top:12px;">What is Carilla</p>
+          <h1>Precision car control in a calm, premium dashboard.</h1>
+          <p class="micro">Laptop clarity with a phone twin made for thumbs.</p>
+        </div>
+        <div class="cta-stack">
+          <button class="primary" data-action="enter">Enter dashboard</button>
+          <span class="pill tiny">Desktop view</span>
+        </div>
       </div>
-      <nav class="nav-stack">
-        <button class="nav-item" data-soon="Tuning Studio">
-          <span class="icon">TS</span>
-          <div>
-            <div><strong>Tuning Studio</strong></div>
-            <small class="muted">Precise, physics-first adjustments</small>
+    </section>
+
+    <section class="intro-screen intro-mobile">
+      <div class="surface">
+        <div class="logo-mark">Carilla</div>
+        <h2>Precision car control, tuned for the phone.</h2>
+        <button class="primary full" data-action="enter">Enter Carilla</button>
+        <div class="pill tiny ghost">Phone view</div>
+      </div>
+    </section>
+
+    <section class="desktop-shell">
+      <div class="shell-header">
+        <div class="logo-mark small">Carilla</div>
+        <div class="chip-lite muted">Dashboard preview • Coming soon</div>
+      </div>
+      <div class="card-grid">
+        <button class="tile theme-home" data-feature="home" data-label="Home">
+          <div class="tile-top">
+            <span class="glyph" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 11.5 12 5l8 6.5"></path>
+                <path d="M7 10v9h10v-9"></path>
+              </svg>
+            </span>
+            <div>
+              <p class="eyebrow" style="margin-bottom:4px;">Home</p>
+              <h3>Signal view</h3>
+            </div>
+            <span class="pill tiny">Coming soon</span>
           </div>
-          <span class="soon-pill">Coming soon</span>
+          <p>Calm overview for your garage pulse.</p>
         </button>
-        <button class="nav-item" data-soon="Car Reels">
-          <span class="icon">CR</span>
-          <div>
-            <div><strong>Car Reels</strong></div>
-            <small class="muted">Share & watch builds in motion</small>
+
+        <button class="tile theme-reels" data-feature="reels" data-label="Reels">
+          <div class="tile-top">
+            <span class="glyph" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="4.5" y="6" width="15" height="12" rx="2.5"></rect>
+                <path d="M11 10.5 14.5 12 11 13.5Z"></path>
+                <path d="M8 8.5h.01M8 15.5h.01M16 8.5h.01M16 15.5h.01"></path>
+              </svg>
+            </span>
+            <div>
+              <p class="eyebrow" style="margin-bottom:4px;">Reels</p>
+              <h3>Motion drops</h3>
+            </div>
+            <span class="pill tiny">Coming soon</span>
           </div>
-          <span class="soon-pill">Coming soon</span>
+          <p>Video-first lane for builds and pulls.</p>
         </button>
-        <button class="nav-item" data-soon="Chat Paddock">
-          <span class="icon">CP</span>
-          <div>
-            <div><strong>Chat Paddock</strong></div>
-            <small class="muted">Talk with the community</small>
+
+        <button class="tile theme-tuning" data-feature="tuning" data-label="Tuning">
+          <div class="tile-top">
+            <span class="glyph" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="7" y1="5" x2="7" y2="19"></line>
+                <line x1="17" y1="5" x2="17" y2="19"></line>
+                <rect x="5" y="8" width="4" height="4" rx="1.5"></rect>
+                <rect x="15" y="12" width="4" height="4" rx="1.5"></rect>
+              </svg>
+            </span>
+            <div>
+              <p class="eyebrow" style="margin-bottom:4px;">Tuning</p>
+              <h3>Exact knobs</h3>
+            </div>
+            <span class="pill tiny">Coming soon</span>
           </div>
-          <span class="soon-pill">Coming soon</span>
+          <p>Physics-first controls for balance and aero.</p>
         </button>
-        <button class="nav-item" data-soon="Profile Controls">
-          <span class="icon">PR</span>
-          <div>
-            <div><strong>Profile Controls</strong></div>
-            <small class="muted">Sync preferences & privacy</small>
+
+        <button class="tile theme-profile" data-feature="profile" data-label="Profile">
+          <div class="tile-top">
+            <span class="glyph" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="9" r="3.2"></circle>
+                <path d="M6.5 18.5c1-2.1 3.1-3.5 5.5-3.5s4.5 1.4 5.5 3.5"></path>
+              </svg>
+            </span>
+            <div>
+              <p class="eyebrow" style="margin-bottom:4px;">Profile</p>
+              <h3>Identity</h3>
+            </div>
+            <span class="pill tiny">Coming soon</span>
           </div>
-          <span class="soon-pill">Coming soon</span>
+          <p>Security, presence, and sync in one place.</p>
+        </button>
+      </div>
+    </section>
+
+    <section class="mobile-shell" aria-live="polite">
+      <div class="mobile-top" style="display:flex; align-items:center; justify-content:space-between; gap:10px;">
+        <div class="logo-mark small">Carilla</div>
+        <div class="pill tiny ghost">Dashboard</div>
+      </div>
+      <div class="mobile-stage">
+        <div class="stage-icon" id="mobileIcon"></div>
+        <div class="soon-callout">THIS FEATURE IS COMING SOON</div>
+        <div class="stage-label" id="mobileLabel">Home</div>
+      </div>
+      <nav class="bottom-nav" aria-label="Primary">
+        <button class="nav-button active" data-tab="home">
+          <span class="glyph" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 11.5 12 5l8 6.5"></path>
+              <path d="M8 10v8h8v-8"></path>
+            </svg>
+          </span>
+          <span class="label">Home</span>
+        </button>
+        <button class="nav-button" data-tab="reels">
+          <span class="glyph" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="5" y="6.5" width="14" height="11" rx="2.3"></rect>
+              <path d="M11 10.5 14.5 12 11 13.5Z"></path>
+            </svg>
+          </span>
+          <span class="label">Reels</span>
+        </button>
+        <button class="nav-button" data-tab="tuning">
+          <span class="glyph" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="7" y1="4" x2="7" y2="20"></line>
+              <line x1="17" y1="4" x2="17" y2="20"></line>
+              <rect x="5" y="9" width="4" height="4" rx="1.5"></rect>
+              <rect x="15" y="11" width="4" height="4" rx="1.5"></rect>
+            </svg>
+          </span>
+          <span class="label">Tuning</span>
+        </button>
+        <button class="nav-button" data-tab="profile">
+          <span class="glyph" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="9" r="3.1"></circle>
+              <path d="M6.3 18.3c1-2 3-3.3 5.7-3.3 2.6 0 4.7 1.3 5.7 3.3"></path>
+            </svg>
+          </span>
+          <span class="label">Profile</span>
         </button>
       </nav>
-      <div class="sidebar-foot">
-        <div class="label">Laptop dashboard</div>
-        <div class="chip"><strong>Precision builds</strong> crafted for widescreens</div>
-        <div class="label" style="margin-top:10px;">Phone navigation</div>
-        <div class="chip"><strong>Bottom nav</strong> tuned for thumbs</div>
+    </section>
+
+    <section class="detail-screen" aria-live="polite">
+      <div class="detail-card">
+        <button class="back-link" data-action="back">← Back to dashboard</button>
+        <div class="detail-icon" id="detailIcon"></div>
+        <div class="detail-label" id="detailLabel">HOME</div>
+        <div class="detail-title">THIS FEATURE IS COMING SOON</div>
       </div>
-    </aside>
-    <main class="content">
-      <div class="top-bar">
-        <div class="title-block">
-          <h1>Carilla Control Deck</h1>
-          <p>All features scaffolded and labeled “Coming Soon” while the tuning magic is prepared.</p>
-        </div>
-        <div class="chip"><strong>Modes</strong> Laptop + Phone</div>
-        <div class="chip"><strong>Status</strong> Coming soon</div>
-      </div>
-
-      <div class="layout-grid">
-        <div class="card hero hero-main" data-soon="Precision Tuning">
-          <div class="pill orange">Precision tuning</div>
-          <h1>Dial in true-to-life power, balance, aero, and stance.</h1>
-          <p>Preview of the upcoming Tuning Studio designed for exact inputs and measurable outputs.</p>
-          <div class="badge-stack">
-            <span class="pill teal">Dyno-grade accuracy</span>
-            <span class="pill blue">Live telemetry overlays</span>
-            <span class="pill orange">Coming soon</span>
-          </div>
-          <div class="stat-grid">
-            <div class="stat">
-              <div class="label">Chassis balance</div>
-              <div class="value">Neutral <span class="trend">Coming soon</span></div>
-            </div>
-            <div class="stat">
-              <div class="label">Power band</div>
-              <div class="value">3.2k - 6.9k <span class="trend">Coming soon</span></div>
-            </div>
-            <div class="stat">
-              <div class="label">Aero map</div>
-              <div class="value">Adaptive <span class="trend">Coming soon</span></div>
-            </div>
-          </div>
-          <div class="actions">
-            <button class="btn" data-soon="Open tuning studio">Open Tuning Studio</button>
-            <button class="btn" data-soon="Load saved build">Load Saved Build</button>
-          </div>
-        </div>
-
-        <div class="card">
-          <div class="pill teal">Telemetry pulse</div>
-          <h2>Track fidelity</h2>
-          <p>Placeholder instrumentation for vehicle health, lap deltas, and grip forecasts.</p>
-          <div class="mini-chart">
-            <div class="mini-bar" style="height: 48px"></div>
-            <div class="mini-bar" style="height: 40px"></div>
-            <div class="mini-bar" style="height: 56px"></div>
-            <div class="mini-bar" style="height: 34px"></div>
-            <div class="mini-bar" style="height: 52px"></div>
-            <div class="mini-bar" style="height: 44px"></div>
-          </div>
-          <div class="timeline">
-            <div class="node">Brake bias <br><strong>Coming soon</strong></div>
-            <div class="node">Dampers <br><strong>Coming soon</strong></div>
-            <div class="node">Gear maps <br><strong>Coming soon</strong></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="pill blue">Feature panorama</div>
-        <h2>Modules mapped for laptop</h2>
-        <p>Each feature is present with “Coming Soon” so laptop users can preview the end-to-end dashboard flow.</p>
-        <div class="feature-grid">
-          <div class="feature-card" data-soon="Precision Tuning Studio">
-            <div class="soon-banner">Coming soon</div>
-            <h3>Precision Tuning Studio</h3>
-            <p>Surface-level UI for springs, dampers, aero, gearing, and tyre temps.</p>
-            <div class="meta-row">
-              <span class="tag">Laptop</span>
-              <span class="tag">Exact controls</span>
-              <span class="tag">Coming soon</span>
-            </div>
-          </div>
-          <div class="feature-card" data-soon="Chat with other drivers">
-            <div class="soon-banner">Coming soon</div>
-            <h3>Chat Paddock</h3>
-            <p>Community rooms, quick replies, and car-specific channels.</p>
-            <div class="meta-row">
-              <span class="tag">Chat</span>
-              <span class="tag">Laptop</span>
-              <span class="tag">Coming soon</span>
-            </div>
-          </div>
-          <div class="feature-card" data-soon="Car Reels">
-            <div class="soon-banner">Coming soon</div>
-            <h3>Car Reels</h3>
-            <p>High-fidelity reels of builds, swaps, and live pulls with reactions.</p>
-            <div class="meta-row">
-              <span class="tag">Reels</span>
-              <span class="tag">Laptop</span>
-              <span class="tag">Coming soon</span>
-            </div>
-          </div>
-          <div class="feature-card" data-soon="Profile controls">
-            <div class="soon-banner">Coming soon</div>
-            <h3>Profile Controls</h3>
-            <p>Privacy, notification routing, linked garages, and device sync.</p>
-            <div class="meta-row">
-              <span class="tag">Profile</span>
-              <span class="tag">Laptop</span>
-              <span class="tag">Coming soon</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="pill orange">Phone navigation</div>
-        <h2>Thumb-first navigation bars for phones</h2>
-        <p>Dedicated mobile nav items mirror laptop features. Interact to see “Coming Soon” banners.</p>
-        <div class="mobile-preview">
-          <div class="phone-frame" data-soon="Phone preview">
-            <div class="notch"></div>
-            <div class="mobile-stage">
-              <div>
-                <div class="pill blue">Phone UI</div>
-                <h3 style="margin:8px 0 6px;">Compact stacks</h3>
-                <p class="muted">Cards collapse, text scales, and nav hugs the bottom edge.</p>
-              </div>
-              <div class="bottom-bar">
-                <div class="bottom-item">Tune<span class="flag">Coming soon</span></div>
-                <div class="bottom-item">Reels<span class="flag">Coming soon</span></div>
-                <div class="bottom-item">Chat<span class="flag">Coming soon</span></div>
-                <div class="bottom-item">Profile<span class="flag">Coming soon</span></div>
-              </div>
-            </div>
-          </div>
-          <div class="phone-frame" data-soon="Phone nav">
-            <div class="notch"></div>
-            <div class="mobile-stage" style="justify-content:center; align-items:center; text-align:center;">
-              <div class="pill teal">Tap any nav</div>
-              <h3 style="margin:12px 0 6px;">Coming Soon</h3>
-              <p class="muted">Every mobile destination is wired to the “Coming Soon” toast.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </main>
-  </div>
-
-  <nav class="mobile-nav" aria-label="Primary">
-    <button class="mobile-link" data-soon="Tuning Studio">
-      <div>🔧 Tune</div>
-      <div class="soon-dot">Coming soon</div>
-    </button>
-    <button class="mobile-link" data-soon="Car Reels">
-      <div>🎞️ Reels</div>
-      <div class="soon-dot">Coming soon</div>
-    </button>
-    <button class="mobile-link" data-soon="Chat Paddock">
-      <div>💬 Chat</div>
-      <div class="soon-dot">Coming soon</div>
-    </button>
-    <button class="mobile-link" data-soon="Profile Controls">
-      <div>👤 Profile</div>
-      <div class="soon-dot">Coming soon</div>
-    </button>
-  </nav>
-
-  <div class="toast" id="toast" role="status" aria-live="polite">Coming soon</div>
+    </section>
+  </main>
 
   <script>
-    const soonables = document.querySelectorAll('[data-soon]');
-    const toast = document.getElementById('toast');
-    let toastTimer;
+    const body = document.body;
+    const enterButtons = document.querySelectorAll('[data-action="enter"]');
+    const tiles = document.querySelectorAll('.tile[data-feature]');
+    const backButton = document.querySelector('[data-action="back"]');
+    const detailIcon = document.getElementById('detailIcon');
+    const detailLabel = document.getElementById('detailLabel');
+    const mobileIcon = document.getElementById('mobileIcon');
+    const mobileLabel = document.getElementById('mobileLabel');
+    const navButtons = document.querySelectorAll('.nav-button');
 
-    soonables.forEach(el => {
-      el.addEventListener('click', () => {
-        const feature = el.getAttribute('data-soon');
-        showToast(feature);
+    const icons = {
+      home: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11.5 12 5l8 6.5"></path><path d="M7 10v9h10v-9"></path></svg>',
+      reels: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4.5" y="6" width="15" height="12" rx="2.6"></rect><path d="M11 10.5 14.5 12 11 13.5Z"></path><path d="M8 8.5h.01M8 15.5h.01M16 8.5h.01M16 15.5h.01"></path></svg>',
+      tuning: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="5" x2="7" y2="19"></line><line x1="17" y1="5" x2="17" y2="19"></line><rect x="5" y="8" width="4" height="4" rx="1.5"></rect><rect x="15" y="12" width="4" height="4" rx="1.5"></rect></svg>',
+      profile: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="3.2"></circle><path d="M6.5 18.5c1-2.1 3.1-3.5 5.5-3.5s4.5 1.4 5.5 3.5"></path></svg>'
+    };
+
+    const featureNames = {
+      home: 'HOME',
+      reels: 'REELS',
+      tuning: 'TUNING',
+      profile: 'PROFILE'
+    };
+
+    enterButtons.forEach(btn => btn.addEventListener('click', () => {
+      body.setAttribute('data-state', 'dashboard');
+    }));
+
+    tiles.forEach(tile => {
+      tile.addEventListener('click', () => {
+        const feature = tile.dataset.feature;
+        openDetail(feature);
       });
     });
 
-    function showToast(feature) {
-      const label = feature ? feature + " is coming soon." : "Coming soon.";
-      toast.textContent = label;
-      toast.classList.add('show');
-      clearTimeout(toastTimer);
-      toastTimer = setTimeout(() => toast.classList.remove('show'), 1800);
+    navButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const target = btn.dataset.tab;
+        navButtons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        setMobileView(target);
+      });
+    });
+
+    backButton.addEventListener('click', () => {
+      body.setAttribute('data-state', 'dashboard');
+    });
+
+    function setMobileView(feature) {
+      body.setAttribute('data-feature', feature);
+      mobileIcon.innerHTML = icons[feature];
+      mobileLabel.textContent = featureNames[feature];
     }
 
-    // Reveal the toast once by default so users notice the pattern
-    window.addEventListener('load', () => showToast("Carilla dashboard"));
+    function openDetail(feature) {
+      body.setAttribute('data-state', 'detail');
+      body.setAttribute('data-feature', feature);
+      detailIcon.innerHTML = icons[feature];
+      detailLabel.textContent = featureNames[feature];
+    }
+
+    // Initialize the phone view icon on load
+    setMobileView('home');
   </script>
 </body>
 </html>
