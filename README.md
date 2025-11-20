@@ -1,4 +1,4 @@
-## Carilla Dashboard Prototype
+## Carilla Dashboard Prototype!
 
 A UI-rich dashboard for laptop users plus thumb-first phone navigation for Carilla’s tuning hub. Every surface is wired to a “Coming Soon” state while the full experiences are built.
 
