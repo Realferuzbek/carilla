@@ -1,0 +1,758 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Carilla Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0a1016;
+      --panel: #101826;
+      --panel-strong: #0d141d;
+      --panel-soft: #131d2b;
+      --stroke: #1f2b3a;
+      --text: #e8eef5;
+      --muted: #93a5ba;
+      --accent: #ff8a3d;
+      --accent-2: #16d6a3;
+      --accent-3: #5ab5ff;
+      --card-radius: 16px;
+      --shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: 'Manrope', system-ui, -apple-system, sans-serif;
+      color: var(--text);
+      background: radial-gradient(circle at 20% 20%, rgba(22, 214, 163, 0.08), transparent 32%),
+                  radial-gradient(circle at 80% 0%, rgba(255, 138, 61, 0.1), transparent 35%),
+                  #05080d;
+      position: relative;
+      overflow-x: hidden;
+    }
+    body::before, body::after {
+      content: "";
+      position: absolute;
+      filter: blur(90px);
+      opacity: 0.6;
+      z-index: 0;
+      pointer-events: none;
+    }
+    body::before {
+      width: 260px; height: 260px;
+      top: 80px; left: 40%;
+      background: radial-gradient(circle, rgba(255, 138, 61, 0.35), transparent 65%);
+    }
+    body::after {
+      width: 320px; height: 320px;
+      bottom: 50px; right: 10%;
+      background: radial-gradient(circle, rgba(90, 181, 255, 0.28), transparent 70%);
+    }
+    .app-shell {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 310px 1fr;
+      min-height: 100vh;
+    }
+    aside.sidebar {
+      background: linear-gradient(180deg, rgba(16, 24, 38, 0.95), rgba(13, 20, 29, 0.96));
+      border-right: 1px solid var(--stroke);
+      padding: 28px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      position: sticky;
+      top: 0;
+      min-height: 100vh;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'Space Grotesk', 'Manrope', sans-serif;
+      letter-spacing: 0.08em;
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 18px;
+    }
+    .beta {
+      background: rgba(255, 138, 61, 0.16);
+      color: var(--accent);
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border: 1px solid rgba(255, 138, 61, 0.3);
+    }
+    .sidebar .intro {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    nav.nav-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .nav-item {
+      width: 100%;
+      border: 1px solid var(--stroke);
+      background: linear-gradient(120deg, rgba(31, 43, 58, 0.45), rgba(16, 24, 38, 0.8));
+      color: var(--text);
+      padding: 14px 12px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      transition: transform 160ms ease, border-color 160ms ease, background 160ms ease;
+      position: relative;
+    }
+    .nav-item:hover {
+      transform: translateX(2px);
+      border-color: rgba(255, 138, 61, 0.6);
+    }
+    .nav-item .icon {
+      width: 34px; height: 34px;
+      border-radius: 10px;
+      background: linear-gradient(140deg, rgba(255, 138, 61, 0.22), rgba(90, 181, 255, 0.14));
+      display: grid;
+      place-items: center;
+      font-weight: 700;
+      color: var(--text);
+      font-family: 'Space Grotesk', 'Manrope', sans-serif;
+    }
+    .nav-item .soon-pill {
+      margin-left: auto;
+      background: rgba(255, 138, 61, 0.18);
+      color: var(--accent);
+      padding: 4px 9px;
+      border-radius: 999px;
+      font-size: 11.5px;
+      border: 1px solid rgba(255, 138, 61, 0.35);
+    }
+    .sidebar-foot {
+      margin-top: auto;
+      border: 1px solid var(--stroke);
+      border-radius: 14px;
+      padding: 14px 12px;
+      background: linear-gradient(160deg, rgba(31, 43, 58, 0.5), rgba(16, 24, 38, 0.9));
+    }
+    .sidebar-foot .label {
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .sidebar-foot .cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: linear-gradient(120deg, #ff8a3d, #ff6b6b);
+      color: #0a0f14;
+      padding: 10px 12px;
+      border-radius: 12px;
+      font-weight: 700;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+    }
+    main.content {
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      background: linear-gradient(180deg, rgba(5, 8, 13, 0.8), rgba(5, 8, 13, 0.9));
+    }
+    .top-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 12px;
+    }
+    .title-block h1 {
+      margin: 0;
+      font-size: clamp(24px, 3vw, 28px);
+      letter-spacing: -0.01em;
+      font-family: 'Space Grotesk', 'Manrope', sans-serif;
+    }
+    .title-block p {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--stroke);
+      color: var(--muted);
+      background: rgba(19, 29, 43, 0.8);
+      font-size: 13px;
+    }
+    .chip strong { color: var(--text); }
+    .layout-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 16px;
+    }
+    .card {
+      background: linear-gradient(145deg, rgba(19, 29, 43, 0.9), rgba(13, 20, 29, 0.95));
+      border: 1px solid var(--stroke);
+      border-radius: var(--card-radius);
+      padding: 18px;
+      position: relative;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 80% 20%, rgba(255, 138, 61, 0.08), transparent 45%),
+                  radial-gradient(circle at 10% 30%, rgba(90, 181, 255, 0.08), transparent 40%);
+      pointer-events: none;
+    }
+    .card h2 {
+      margin: 0;
+      font-size: 18px;
+      letter-spacing: -0.01em;
+    }
+    .card p { margin: 6px 0 0; color: var(--muted); font-size: 14px; }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(16, 24, 38, 0.8);
+    }
+    .pill.orange { color: var(--accent); border-color: rgba(255, 138, 61, 0.4); background: rgba(255, 138, 61, 0.12); }
+    .pill.teal { color: var(--accent-2); border-color: rgba(22, 214, 163, 0.5); background: rgba(22, 214, 163, 0.14); }
+    .pill.blue { color: var(--accent-3); border-color: rgba(90, 181, 255, 0.5); background: rgba(90, 181, 255, 0.12); }
+    .hero {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+    }
+    .hero-main h1 {
+      font-size: clamp(30px, 3.4vw, 36px);
+      margin: 10px 0 8px;
+      letter-spacing: -0.03em;
+      font-family: 'Space Grotesk', 'Manrope', sans-serif;
+    }
+    .hero-main .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 14px;
+    }
+    .btn {
+      border: none;
+      cursor: pointer;
+      border-radius: 12px;
+      padding: 12px 14px;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text);
+      background: linear-gradient(120deg, rgba(255, 138, 61, 0.34), rgba(22, 214, 163, 0.24));
+      border: 1px solid rgba(255, 138, 61, 0.4);
+      transition: transform 150ms ease, box-shadow 150ms ease, border-color 150ms ease;
+    }
+    .btn:hover { transform: translateY(-1px); box-shadow: 0 10px 32px rgba(255, 138, 61, 0.25); }
+    .badge-stack {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 10px;
+      margin-top: 12px;
+    }
+    .stat {
+      padding: 12px;
+      border: 1px solid var(--stroke);
+      border-radius: 12px;
+      background: rgba(19, 29, 43, 0.7);
+    }
+    .stat .label {
+      color: var(--muted);
+      font-size: 12px;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+    }
+    .stat .value {
+      font-size: 20px;
+      font-weight: 700;
+      margin-top: 6px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .stat .trend {
+      color: var(--accent);
+      font-size: 12px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: rgba(255, 138, 61, 0.12);
+      border: 1px solid rgba(255, 138, 61, 0.3);
+    }
+    .mini-chart {
+      margin-top: 14px;
+      display: grid;
+      gap: 6px;
+      grid-template-columns: repeat(6, 1fr);
+    }
+    .mini-bar {
+      height: 48px;
+      border-radius: 8px;
+      background: linear-gradient(180deg, rgba(22, 214, 163, 0.8), rgba(16, 24, 38, 0.8));
+      border: 1px solid rgba(22, 214, 163, 0.4);
+    }
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 12px;
+    }
+    .feature-card {
+      padding: 14px;
+      border: 1px solid var(--stroke);
+      border-radius: 14px;
+      background: linear-gradient(160deg, rgba(19, 29, 43, 0.88), rgba(13, 20, 29, 0.92));
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      transition: border-color 160ms ease, transform 160ms ease;
+    }
+    .feature-card:hover { border-color: rgba(22, 214, 163, 0.4); transform: translateY(-1px); }
+    .feature-card h3 { margin: 0; font-size: 16px; }
+    .feature-card p { margin: 6px 0 0; font-size: 13px; color: var(--muted); }
+    .feature-card .soon-banner {
+      position: absolute;
+      top: 12px; right: 12px;
+      background: rgba(255, 138, 61, 0.2);
+      color: var(--accent);
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 138, 61, 0.35);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+    }
+    .feature-card .meta-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 14px;
+      flex-wrap: wrap;
+    }
+    .tag {
+      padding: 6px 10px;
+      border-radius: 10px;
+      font-size: 12px;
+      color: var(--muted);
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .timeline {
+      display: flex;
+      gap: 12px;
+      margin-top: 14px;
+    }
+    .timeline .node {
+      flex: 1;
+      padding: 12px;
+      border-radius: 12px;
+      border: 1px dashed rgba(255, 255, 255, 0.1);
+      background: rgba(19, 29, 43, 0.7);
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .mobile-preview {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 12px;
+      align-items: stretch;
+    }
+    .phone-frame {
+      border: 1px solid var(--stroke);
+      border-radius: 24px;
+      padding: 14px;
+      background: linear-gradient(180deg, rgba(16, 24, 38, 0.95), rgba(13, 20, 29, 0.96));
+      position: relative;
+      min-height: 260px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .phone-frame .notch {
+      width: 68%;
+      height: 10px;
+      background: rgba(255, 255, 255, 0.09);
+      border-radius: 0 0 18px 18px;
+      align-self: center;
+    }
+    .phone-frame .mobile-stage {
+      flex: 1;
+      border: 1px solid var(--stroke);
+      border-radius: 16px;
+      padding: 12px;
+      background: linear-gradient(150deg, rgba(31, 43, 58, 0.7), rgba(16, 24, 38, 0.9));
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .phone-frame .bottom-bar {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      padding: 10px;
+      background: rgba(13, 20, 29, 0.9);
+      border-radius: 14px;
+      border: 1px solid var(--stroke);
+    }
+    .phone-frame .bottom-item {
+      text-align: center;
+      font-size: 12px;
+      color: var(--text);
+      padding: 8px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+    .phone-frame .bottom-item .flag {
+      display: block;
+      margin-top: 6px;
+      font-size: 11px;
+      color: var(--accent);
+    }
+    nav.mobile-nav {
+      position: fixed;
+      bottom: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(480px, calc(100% - 32px));
+      background: rgba(13, 20, 29, 0.95);
+      border: 1px solid var(--stroke);
+      border-radius: 22px;
+      padding: 10px 12px;
+      display: none;
+      gap: 10px;
+      box-shadow: 0 14px 36px rgba(0, 0, 0, 0.35);
+      backdrop-filter: blur(10px);
+      z-index: 10;
+    }
+    .mobile-nav .mobile-link {
+      flex: 1;
+      border: 1px solid var(--stroke);
+      background: rgba(255, 255, 255, 0.04);
+      border-radius: 14px;
+      padding: 8px 6px;
+      color: var(--text);
+      text-align: center;
+      font-size: 13px;
+      display: grid;
+      gap: 4px;
+      cursor: pointer;
+    }
+    .mobile-nav .mobile-link .soon-dot {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      justify-content: center;
+      font-size: 11px;
+      color: var(--accent);
+    }
+    .toast {
+      position: fixed;
+      right: 16px;
+      bottom: 16px;
+      padding: 14px 16px;
+      border-radius: 14px;
+      background: rgba(13, 20, 29, 0.95);
+      border: 1px solid var(--stroke);
+      color: var(--text);
+      box-shadow: 0 10px 26px rgba(0, 0, 0, 0.35);
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 180ms ease, transform 180ms ease;
+      pointer-events: none;
+      z-index: 20;
+    }
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    @media (max-width: 1100px) {
+      .app-shell {
+        grid-template-columns: 1fr;
+      }
+      aside.sidebar {
+        display: none;
+      }
+      main.content {
+        padding-bottom: 100px;
+      }
+    }
+    @media (max-width: 720px) {
+      nav.mobile-nav { display: flex; }
+      .layout-grid { grid-template-columns: 1fr; }
+      .hero-main h1 { font-size: 28px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">Carilla <span class="beta">beta</span></div>
+      <div class="intro">
+        Carilla is your car hub to tune realistic builds, swap knowledge, share reels, and keep settings synced across laptop and phone.
+      </div>
+      <nav class="nav-stack">
+        <button class="nav-item" data-soon="Tuning Studio">
+          <span class="icon">TS</span>
+          <div>
+            <div><strong>Tuning Studio</strong></div>
+            <small class="muted">Precise, physics-first adjustments</small>
+          </div>
+          <span class="soon-pill">Coming soon</span>
+        </button>
+        <button class="nav-item" data-soon="Car Reels">
+          <span class="icon">CR</span>
+          <div>
+            <div><strong>Car Reels</strong></div>
+            <small class="muted">Share & watch builds in motion</small>
+          </div>
+          <span class="soon-pill">Coming soon</span>
+        </button>
+        <button class="nav-item" data-soon="Chat Paddock">
+          <span class="icon">CP</span>
+          <div>
+            <div><strong>Chat Paddock</strong></div>
+            <small class="muted">Talk with the community</small>
+          </div>
+          <span class="soon-pill">Coming soon</span>
+        </button>
+        <button class="nav-item" data-soon="Profile Controls">
+          <span class="icon">PR</span>
+          <div>
+            <div><strong>Profile Controls</strong></div>
+            <small class="muted">Sync preferences & privacy</small>
+          </div>
+          <span class="soon-pill">Coming soon</span>
+        </button>
+      </nav>
+      <div class="sidebar-foot">
+        <div class="label">Laptop dashboard</div>
+        <div class="chip"><strong>Precision builds</strong> crafted for widescreens</div>
+        <div class="label" style="margin-top:10px;">Phone navigation</div>
+        <div class="chip"><strong>Bottom nav</strong> tuned for thumbs</div>
+      </div>
+    </aside>
+    <main class="content">
+      <div class="top-bar">
+        <div class="title-block">
+          <h1>Carilla Control Deck</h1>
+          <p>All features scaffolded and labeled “Coming Soon” while the tuning magic is prepared.</p>
+        </div>
+        <div class="chip"><strong>Modes</strong> Laptop + Phone</div>
+        <div class="chip"><strong>Status</strong> Coming soon</div>
+      </div>
+
+      <div class="layout-grid">
+        <div class="card hero hero-main" data-soon="Precision Tuning">
+          <div class="pill orange">Precision tuning</div>
+          <h1>Dial in true-to-life power, balance, aero, and stance.</h1>
+          <p>Preview of the upcoming Tuning Studio designed for exact inputs and measurable outputs.</p>
+          <div class="badge-stack">
+            <span class="pill teal">Dyno-grade accuracy</span>
+            <span class="pill blue">Live telemetry overlays</span>
+            <span class="pill orange">Coming soon</span>
+          </div>
+          <div class="stat-grid">
+            <div class="stat">
+              <div class="label">Chassis balance</div>
+              <div class="value">Neutral <span class="trend">Coming soon</span></div>
+            </div>
+            <div class="stat">
+              <div class="label">Power band</div>
+              <div class="value">3.2k - 6.9k <span class="trend">Coming soon</span></div>
+            </div>
+            <div class="stat">
+              <div class="label">Aero map</div>
+              <div class="value">Adaptive <span class="trend">Coming soon</span></div>
+            </div>
+          </div>
+          <div class="actions">
+            <button class="btn" data-soon="Open tuning studio">Open Tuning Studio</button>
+            <button class="btn" data-soon="Load saved build">Load Saved Build</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="pill teal">Telemetry pulse</div>
+          <h2>Track fidelity</h2>
+          <p>Placeholder instrumentation for vehicle health, lap deltas, and grip forecasts.</p>
+          <div class="mini-chart">
+            <div class="mini-bar" style="height: 48px"></div>
+            <div class="mini-bar" style="height: 40px"></div>
+            <div class="mini-bar" style="height: 56px"></div>
+            <div class="mini-bar" style="height: 34px"></div>
+            <div class="mini-bar" style="height: 52px"></div>
+            <div class="mini-bar" style="height: 44px"></div>
+          </div>
+          <div class="timeline">
+            <div class="node">Brake bias <br><strong>Coming soon</strong></div>
+            <div class="node">Dampers <br><strong>Coming soon</strong></div>
+            <div class="node">Gear maps <br><strong>Coming soon</strong></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="pill blue">Feature panorama</div>
+        <h2>Modules mapped for laptop</h2>
+        <p>Each feature is present with “Coming Soon” so laptop users can preview the end-to-end dashboard flow.</p>
+        <div class="feature-grid">
+          <div class="feature-card" data-soon="Precision Tuning Studio">
+            <div class="soon-banner">Coming soon</div>
+            <h3>Precision Tuning Studio</h3>
+            <p>Surface-level UI for springs, dampers, aero, gearing, and tyre temps.</p>
+            <div class="meta-row">
+              <span class="tag">Laptop</span>
+              <span class="tag">Exact controls</span>
+              <span class="tag">Coming soon</span>
+            </div>
+          </div>
+          <div class="feature-card" data-soon="Chat with other drivers">
+            <div class="soon-banner">Coming soon</div>
+            <h3>Chat Paddock</h3>
+            <p>Community rooms, quick replies, and car-specific channels.</p>
+            <div class="meta-row">
+              <span class="tag">Chat</span>
+              <span class="tag">Laptop</span>
+              <span class="tag">Coming soon</span>
+            </div>
+          </div>
+          <div class="feature-card" data-soon="Car Reels">
+            <div class="soon-banner">Coming soon</div>
+            <h3>Car Reels</h3>
+            <p>High-fidelity reels of builds, swaps, and live pulls with reactions.</p>
+            <div class="meta-row">
+              <span class="tag">Reels</span>
+              <span class="tag">Laptop</span>
+              <span class="tag">Coming soon</span>
+            </div>
+          </div>
+          <div class="feature-card" data-soon="Profile controls">
+            <div class="soon-banner">Coming soon</div>
+            <h3>Profile Controls</h3>
+            <p>Privacy, notification routing, linked garages, and device sync.</p>
+            <div class="meta-row">
+              <span class="tag">Profile</span>
+              <span class="tag">Laptop</span>
+              <span class="tag">Coming soon</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="pill orange">Phone navigation</div>
+        <h2>Thumb-first navigation bars for phones</h2>
+        <p>Dedicated mobile nav items mirror laptop features. Interact to see “Coming Soon” banners.</p>
+        <div class="mobile-preview">
+          <div class="phone-frame" data-soon="Phone preview">
+            <div class="notch"></div>
+            <div class="mobile-stage">
+              <div>
+                <div class="pill blue">Phone UI</div>
+                <h3 style="margin:8px 0 6px;">Compact stacks</h3>
+                <p class="muted">Cards collapse, text scales, and nav hugs the bottom edge.</p>
+              </div>
+              <div class="bottom-bar">
+                <div class="bottom-item">Tune<span class="flag">Coming soon</span></div>
+                <div class="bottom-item">Reels<span class="flag">Coming soon</span></div>
+                <div class="bottom-item">Chat<span class="flag">Coming soon</span></div>
+                <div class="bottom-item">Profile<span class="flag">Coming soon</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="phone-frame" data-soon="Phone nav">
+            <div class="notch"></div>
+            <div class="mobile-stage" style="justify-content:center; align-items:center; text-align:center;">
+              <div class="pill teal">Tap any nav</div>
+              <h3 style="margin:12px 0 6px;">Coming Soon</h3>
+              <p class="muted">Every mobile destination is wired to the “Coming Soon” toast.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <nav class="mobile-nav" aria-label="Primary">
+    <button class="mobile-link" data-soon="Tuning Studio">
+      <div>🔧 Tune</div>
+      <div class="soon-dot">Coming soon</div>
+    </button>
+    <button class="mobile-link" data-soon="Car Reels">
+      <div>🎞️ Reels</div>
+      <div class="soon-dot">Coming soon</div>
+    </button>
+    <button class="mobile-link" data-soon="Chat Paddock">
+      <div>💬 Chat</div>
+      <div class="soon-dot">Coming soon</div>
+    </button>
+    <button class="mobile-link" data-soon="Profile Controls">
+      <div>👤 Profile</div>
+      <div class="soon-dot">Coming soon</div>
+    </button>
+  </nav>
+
+  <div class="toast" id="toast" role="status" aria-live="polite">Coming soon</div>
+
+  <script>
+    const soonables = document.querySelectorAll('[data-soon]');
+    const toast = document.getElementById('toast');
+    let toastTimer;
+
+    soonables.forEach(el => {
+      el.addEventListener('click', () => {
+        const feature = el.getAttribute('data-soon');
+        showToast(feature);
+      });
+    });
+
+    function showToast(feature) {
+      const label = feature ? feature + " is coming soon." : "Coming soon.";
+      toast.textContent = label;
+      toast.classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => toast.classList.remove('show'), 1800);
+    }
+
+    // Reveal the toast once by default so users notice the pattern
+    window.addEventListener('load', () => showToast("Carilla dashboard"));
+  </script>
+</body>
+</html>
