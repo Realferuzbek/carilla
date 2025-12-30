@@ -11,10 +11,26 @@ app.use(cors());
 app.use(express.json());
 
 const features = [
-  { key: 'tuning', title: 'Precision Tuning Studio', message: 'Detailed tuning endpoints are coming soon.' },
-  { key: 'reels', title: 'Car Reels', message: 'Video reels APIs are coming soon.' },
-  { key: 'chat', title: 'Chat Paddock', message: 'Realtime chat channels are coming soon.' },
-  { key: 'profile', title: 'Profile Controls', message: 'Account settings and preferences APIs are coming soon.' },
+  {
+    key: 'tuning',
+    title: 'Precision Tuning Studio',
+    message: 'Concept demo only; dataset collection is in progress and AI tuning outputs are not generated yet.',
+  },
+  {
+    key: 'reels',
+    title: 'Car Reels',
+    message: 'Concept demo only; reel ingestion, processing, and storage are not wired yet.',
+  },
+  {
+    key: 'chat',
+    title: 'Chat Paddock',
+    message: 'Planned surface; realtime chat service is not connected yet.',
+  },
+  {
+    key: 'profile',
+    title: 'Profile Controls',
+    message: 'Planned surface; auth and profile persistence are not wired yet.',
+  },
 ];
 
 function comingSoonPayload(featureKey) {
