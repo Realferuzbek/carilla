@@ -306,4 +306,4 @@ Real photos as input, no cartoonish looks
 
 Clean separation between product, infrastructure, and ML.
 
-This prototype is a thin vertical slice of a larger idea: it is intentionally small, but built like the first step of a real product.
+This prototype is a thin vertical slice of a larger idea: it is intentionally small, but built like the first step of a real product!
