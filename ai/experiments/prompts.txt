@@ -1,0 +1,19 @@
+photo of <carilla_gentra>, front view, realistic car photo, daylight
+
+photo of <carilla_gentra>, rear view, realistic car photo, daylight
+
+photo of <carilla_gentra>, left side view, realistic car photo, daylight
+
+photo of <carilla_gentra>, right side view, realistic car photo, daylight
+
+photo of <carilla_gentra>, front 45 degree view, realistic car photo, daylight
+
+photo of <carilla_gentra>, rear 45 degree view, realistic car photo, daylight
+
+photo of <carilla_gentra>, front view, realistic car photo, cloudy weather
+
+photo of <carilla_gentra>, side view, realistic car photo, cloudy weather
+
+photo of <carilla_gentra>, front 45 degree view, realistic car photo, sunset lighting
+
+photo of <carilla_gentra>, rear view, realistic car photo, indoor garage lighting
