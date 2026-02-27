@@ -1,30 +1,44 @@
 # AI Experiments
 
-This folder contains AI experiment scaffolding and notes. Existing `sport_gentra` materials are kept as-is.
+This folder contains AI experiment scaffolding and notes.
 
-## Paper 1 (Stable Diffusion LoRA, Identity Learning)
+## Paper 1 (Identity Learning, Text-to-Image, LoRA)
 
-Paper 1 focuses on **identity learning** for a text-to-image LoRA using the custom token `<carilla_gentra>`.
+Paper 1 protocol (source of truth):
 
-Planned study setup:
+- Task: text-to-image identity learning with token `<carilla_gentra>`
+- Dataset: 80 total images
+- Split: 70 train / 10 val
+- Experiments:
+  - `E0`: base Stable Diffusion v1.5 (no LoRA)
+  - `E1`: LoRA-20
+  - `E2`: LoRA-60
+  - `E3`: LoRA-70
+- Fixed evaluation inputs:
+  - Prompts: `ai/experiments/prompts_identity_v1.txt` (10 prompts, fixed order)
+  - Seeds: `ai/experiments/seeds_v1.txt` (`111`, `222`, `333`, `444`, fixed order)
+- Fixed method settings (same for all experiments):
+  - Runtime: Google Colab
+  - Model family: Stable Diffusion v1.5
+  - Generation mode: text-to-image only
+  - Resolution: `512x512`
+  - Inference steps: `30`
+  - Images per prompt: `4` (from fixed seeds `111`, `222`, `333`, `444`)
+  - LoRA rank: `16`
+  - Learning rate: `1e-4`
+  - Training steps: `2000`
+  - Batch size: `1`
+  - Gradient accumulation: `4`
+- Evaluation:
+  - Human ratings for identity and realism on a `1-10` scale
+  - CLIPScore
 
-- Task: text-to-image identity learning (Stable Diffusion LoRA)
-- Dataset size: 80 total images
-- Split: 70 train / 10 validation
-- Prompt set: 10 identity prompts (`experiments/prompts_identity_v1.txt`)
-- Seed set: 4 seeds (`experiments/seeds_v1.txt` -> `111, 222, 333, 444`)
-- Evaluation groups: `E0`, `E1`, `E2`, `E3` (tracked in experiment notes/results later)
+Caption format for Paper 1:
 
-Paper 1 scaffolding added:
-
-- Raw dataset target: `datasets/raw/gentra_luxury_v1/`
-- Manifest template: `datasets/manifests/gentra_luxury_v1_manifest.csv`
-- Colab runbook placeholder: `training/colab_paper1_lora.md`
-
-Notes:
-
-- This is scaffolding only. Training implementation, dependencies, and execution scripts are intentionally not added yet.
-- Keep prompts/seeds versioned so future papers can compare runs cleanly.
+- Token must stay `<carilla_gentra>`
+- Fields: `[view]`, `[location]`, `[lighting]`
+- Lighting tags: `day`, `sunset`, `cloudy`
+- Location tags: `parking`, `street`
 
 ## Paper 1 Dataset Preparation (CLI)
 
@@ -34,11 +48,11 @@ Paper 1 dataset prep expects raw image filenames in this format:
 - Example: `front_day_parking_001.jpg`
 - Example: `rear45_sunset_street_002.png`
 
-Allowed tags:
+Paper 1 controlled tags:
 
 - Views: `front`, `rear`, `left`, `right`, `front45`, `rear45`, `closeup`
-- Lighting: `day`, `cloudy`, `sunset`, `indoor`
-- Location: `parking`, `street`, `garage`
+- Lighting: `day`, `cloudy`, `sunset`
+- Location: `parking`, `street`
 
 Center-crop note:
 
@@ -59,4 +73,10 @@ python ai/scripts/validate_dataset.py
 python ai/scripts/validate_dataset.py --raw_dir ai/datasets/raw/gentra_luxury_v1
 ```
 
+## Legacy (Not Used for Paper 1)
 
+The following legacy `sport_gentra` artifacts are kept for history and are not part of Paper 1 runs:
+
+- `ai/scripts/prepare_sport_gentra_dataset.py`
+- `ai/training/colab_sport_gentra_lora.md`
+- `ai/datasets/processed/sport_gentra/`

@@ -1,3 +1,7 @@
+# LEGACY: Sport Gentra LoRA Colab Spec (Not Used for Paper 1)
+
+This document is legacy and is not part of Paper 1 (`<carilla_gentra>`, E0-E3) runs.
+
 # Colab spec: Sport Gentra LoRA training (diffusers)
 
 ## Overview
