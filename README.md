@@ -1,10 +1,10 @@
 # Carilla — AI-Assisted Car Tuning Workflow (Prototype)
 
-Carilla is a **prototype-stage** product for an AI-assisted car tuning workflow: users upload car photos, the system logs a tuning “job”, and the product is designed to evolve into generating tuned outputs programmatically.
+Carilla is a **prototype-stage** product for an AI-assisted car tuning workflow. The current frontend is a phone-first **Tuning Studio** where users upload a car photo, pick a style (`Sport`, `Premium`, `Lux`), generate a demo preview, compare before/after, and save recent results locally.
 
 Live demo: https://carilla.vercel.app/
 
-> Transparency (code-backed): the backend currently stores uploads and job logs, while most product surfaces return “coming soon” descriptors. AI tuning outputs are not generated yet in this repo.
+> Transparency (code-backed): frontend preview generation is currently a local demo transform (no ML inference yet). The backend currently stores uploads and job logs, while several API surfaces still return “coming soon” descriptors.
 
 ---
 
@@ -30,13 +30,15 @@ This repo contains three parts:
 
 ## Frontend (UI prototype)
 
-- Static “Carilla Dashboard” UI: `frontend/index.html`
-- Presents the product navigation concept:
-  - `home`
-  - `reels`
-  - `tuning`
-  - `profile`
-- The frontend is a UI prototype and is not wired to the backend in code.
+- Single-screen, mobile-first “Tuning Studio” UI: `frontend/index.html`
+- Current frontend flow:
+  - upload or take a car photo
+  - choose a style (`Sport`, `Premium`, `Lux`)
+  - generate a demo preview (local transform placeholder)
+  - compare with a before/after slider
+  - save/share/save to Garage (last 5 via localStorage)
+  - optional booking panel with Telegram / Instagram / Email / Phone links
+- The frontend remains backend-independent for now and is structured so preview generation can be swapped to a real API later.
 
 ---
 
@@ -158,8 +160,8 @@ I led Carilla as the **product owner and context/architecture engineer**:
 
 ## Roadmap 
 
-- Wire the frontend prototype to the backend API (show upload status + job history)
-- Replace “coming soon” surfaces (`reels`, `chat`, `profile`) with real implementations
+- Wire the frontend Tuning Studio preview seam to a real backend inference API
+- Sync Garage/history and generation metadata with backend storage
 - Integrate an AI tuning pipeline:
   - run inference on uploaded photos
   - write tuned outputs into `backend/uploads/tuned_results`
