@@ -1,4 +1,4 @@
-"""Validate processed Paper 1 dataset outputs for `gentra_luxury_v1`.
+"""Validate processed Paper 1 dataset outputs for `sonata_luxury_v1`.
 
 Checks include:
 - manifest schema and counts
@@ -23,8 +23,8 @@ from typing import Iterable
 LOGGER = logging.getLogger("validate_dataset")
 
 AI_ROOT = Path(__file__).resolve().parent.parent
-DEFAULT_PROCESSED_DIR = AI_ROOT / "datasets" / "processed" / "gentra_luxury_v1"
-DEFAULT_RAW_DIR = AI_ROOT / "datasets" / "raw" / "gentra_luxury_v1"
+DEFAULT_PROCESSED_DIR = AI_ROOT / "datasets" / "processed" / "sonata_luxury_v1"
+DEFAULT_RAW_DIR = AI_ROOT / "datasets" / "raw" / "sonata_luxury_v1"
 
 SUPPORTED_EXTENSIONS = {".jpg", ".jpeg", ".png", ".webp"}
 ALLOWED_VIEWS = {"front", "rear", "left", "right", "front45", "rear45", "closeup"}

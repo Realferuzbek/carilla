@@ -1,6 +1,6 @@
 """Paper 1 dataset preparation CLI for Stable Diffusion LoRA identity learning.
 
-This script prepares the `gentra_luxury_v1` dataset for Paper 1 by:
+This script prepares the `sonata_luxury_v1` dataset for Paper 1 by:
 
 - Parsing raw filenames with strict tags
 - Center-cropping images to square (car should be roughly centered in frame)
@@ -37,8 +37,8 @@ except ImportError as exc:  # pragma: no cover - runtime dependency guard
 LOGGER = logging.getLogger("dataset_prep")
 
 AI_ROOT = Path(__file__).resolve().parent.parent
-DEFAULT_RAW_DIR = AI_ROOT / "datasets" / "raw" / "gentra_luxury_v1"
-DEFAULT_OUT_DIR = AI_ROOT / "datasets" / "processed" / "gentra_luxury_v1"
+DEFAULT_RAW_DIR = AI_ROOT / "datasets" / "raw" / "sonata_luxury_v1"
+DEFAULT_OUT_DIR = AI_ROOT / "datasets" / "processed" / "sonata_luxury_v1"
 
 SUPPORTED_EXTENSIONS = {".jpg", ".jpeg", ".png", ".webp"}
 ALLOWED_VIEWS = {"front", "rear", "left", "right", "front45", "rear45", "closeup"}
@@ -313,9 +313,9 @@ def build_caption(sample: RawSample) -> str:
     location_phrase = LOCATION_PHRASES[sample.location]
     lighting_phrase = LIGHTING_PHRASES[sample.lighting]
     return (
-        "photo of <carilla_gentra>, "
+        "photo of <carilla_sonata>, "
         f"{view_phrase}, "
-        "black chevrolet gentra 2024, "
+        "Hyundai Sonata, white, 2020, Asia/Uzbekistan spec, '6-series', "
         f"{location_phrase}, "
         f"{lighting_phrase}, "
         "realistic car photo"

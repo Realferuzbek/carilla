@@ -1,6 +1,6 @@
 # Paper 1 LoRA Colab Runbook (Google Colab, Text-to-Image Only)
 
-This runbook documents the fixed Paper 1 protocol for identity learning with `<carilla_gentra>`.
+This runbook documents the fixed Paper 1 protocol for identity learning with `<carilla_sonata>` for Hyundai Sonata, white, 2020, Asia/Uzbekistan spec, '6-series'.
 
 ## Paper 1 Protocol (Fixed)
 
@@ -45,18 +45,18 @@ Run local preparation and validation before Colab:
 
 ```bash
 python ai/scripts/dataset_prep.py
-python ai/scripts/validate_dataset.py --raw_dir ai/datasets/raw/gentra_luxury_v1
+python ai/scripts/validate_dataset.py --raw_dir ai/datasets/raw/sonata_luxury_v1
 ```
 
 Confirm these processed artifacts exist before upload:
 
-- `ai/datasets/processed/gentra_luxury_v1/images_1024/`
-- `ai/datasets/processed/gentra_luxury_v1/train_512/`
-- `ai/datasets/processed/gentra_luxury_v1/val_512/`
-- `ai/datasets/processed/gentra_luxury_v1/captions/`
-- `ai/datasets/processed/gentra_luxury_v1/splits/train.txt`
-- `ai/datasets/processed/gentra_luxury_v1/splits/val.txt`
-- `ai/datasets/processed/gentra_luxury_v1/manifest_generated.csv`
+- `ai/datasets/processed/sonata_luxury_v1/images_1024/`
+- `ai/datasets/processed/sonata_luxury_v1/train_512/`
+- `ai/datasets/processed/sonata_luxury_v1/val_512/`
+- `ai/datasets/processed/sonata_luxury_v1/captions/`
+- `ai/datasets/processed/sonata_luxury_v1/splits/train.txt`
+- `ai/datasets/processed/sonata_luxury_v1/splits/val.txt`
+- `ai/datasets/processed/sonata_luxury_v1/manifest_generated.csv`
 
 ## Experiment Definitions (E0-E3)
 
@@ -90,7 +90,7 @@ Confirm these processed artifacts exist before upload:
 
 ## What Not To Change During Paper 1
 
-- Identity token: `<carilla_gentra>`
+- Identity token: `<carilla_sonata>`
 - Prompt source file: `ai/experiments/prompts_identity_v1.txt`
 - Seed source file: `ai/experiments/seeds_v1.txt`
 - Fixed seeds: `111`, `222`, `333`, `444`

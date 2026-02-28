@@ -76,15 +76,15 @@ These endpoints respond with a small JSON descriptor `{ key, title, message }`:
 AI-related code lives in `ai/` and is **not integrated** into the backend yet.
 
 ### Dataset preparation
-- Script: `ai/scripts/prepare_sport_gentra_dataset.py`
-  - Reads raw images from: `ai/datasets/raw/sport_gentra/`
-  - Outputs processed images + captions under: `ai/datasets/processed/sport_gentra/`
+- Script: `ai/scripts/prepare_sport_sonata_dataset.py`
+  - Reads raw images from: `ai/datasets/raw/sport_sonata/`
+  - Outputs processed images + captions under: `ai/datasets/processed/sport_sonata/`
 
 ### Training notes
-- `ai/training/colab_sport_gentra_lora.md`
+- `ai/training/colab_sport_sonata_lora.md`
   - Colab-oriented LoRA training steps (documentation)
 
-> Positioning: the repo contains a specific dataset path (`sport_gentra`), but Carilla itself is described generally as a car-tuning workflow prototype.
+> Positioning: the repo contains a specific dataset path (`sport_sonata`) for "Hyundai Sonata, white, 2020, Asia/Uzbekistan spec, '6-series'", but Carilla itself is described generally as a car-tuning workflow prototype.
 
 ---
 
@@ -133,7 +133,7 @@ curl http://localhost:3000/api/tuning/log
 ### AI dataset prep (optional)
 ```bash
 pip install pillow
-python ai/scripts/prepare_sport_gentra_dataset.py
+python ai/scripts/prepare_sport_sonata_dataset.py
 ```
 
 ---

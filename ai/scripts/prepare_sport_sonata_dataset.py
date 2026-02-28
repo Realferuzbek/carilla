@@ -4,12 +4,12 @@ import sys
 from PIL import Image
 
 ROOT = Path(__file__).resolve().parent.parent
-RAW_DIR = ROOT / "datasets" / "raw" / "sport_gentra"
-OUT_IMAGES_DIR = ROOT / "datasets" / "processed" / "sport_gentra" / "images"
-CAPTIONS_PATH = ROOT / "datasets" / "processed" / "sport_gentra" / "captions.txt"
+RAW_DIR = ROOT / "datasets" / "raw" / "sport_sonata"
+OUT_IMAGES_DIR = ROOT / "datasets" / "processed" / "sport_sonata" / "images"
+CAPTIONS_PATH = ROOT / "datasets" / "processed" / "sport_sonata" / "captions.txt"
 
 DEFAULT_CAPTION = (
-    "ultra realistic photo of a black Chevrolet Gentra 2024 in aggressive sport tuning, "
+    "ultra realistic photo of Hyundai Sonata, white, 2020, Asia/Uzbekistan spec, '6-series', in aggressive sport tuning, "
     "wide body kit, carbon fiber details, parked in a premium studio, soft lighting, 8k detail"
 )
 
@@ -59,7 +59,7 @@ def process_images(images):
                 cropped = center_crop_to_square(rgb_image)
                 resized = cropped.resize(TARGET_SIZE, Image.LANCZOS)
 
-            filename = f"sport_gentra_{idx:04d}.png"
+            filename = f"sport_sonata_{idx:04d}.png"
             out_path = OUT_IMAGES_DIR / filename
             resized.save(out_path, format="PNG")
 

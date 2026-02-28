@@ -6,7 +6,7 @@ This folder contains AI experiment scaffolding and notes.
 
 Paper 1 protocol (source of truth):
 
-- Task: text-to-image identity learning with token `<carilla_gentra>`
+- Task: text-to-image identity learning with token `<carilla_sonata>` for Hyundai Sonata, white, 2020, Asia/Uzbekistan spec, '6-series'
 - Dataset: 80 total images
 - Split: 70 train / 10 val
 - Experiments:
@@ -35,7 +35,7 @@ Paper 1 protocol (source of truth):
 
 Caption format for Paper 1:
 
-- Token must stay `<carilla_gentra>`
+- Token must stay `<carilla_sonata>`
 - Fields: `[view]`, `[location]`, `[lighting]`
 - Lighting tags: `day`, `sunset`, `cloudy`
 - Location tags: `parking`, `street`
@@ -70,13 +70,13 @@ Example commands (Windows-friendly):
 python ai/scripts/dataset_prep.py
 python ai/scripts/dataset_prep.py --overwrite
 python ai/scripts/validate_dataset.py
-python ai/scripts/validate_dataset.py --raw_dir ai/datasets/raw/gentra_luxury_v1
+python ai/scripts/validate_dataset.py --raw_dir ai/datasets/raw/sonata_luxury_v1
 ```
 
 ## Legacy (Not Used for Paper 1)
 
-The following legacy `sport_gentra` artifacts are kept for history and are not part of Paper 1 runs:
+The following legacy `sport_sonata` artifacts are kept for history and are not part of Paper 1 runs:
 
-- `ai/scripts/prepare_sport_gentra_dataset.py`
-- `ai/training/colab_sport_gentra_lora.md`
-- `ai/datasets/processed/sport_gentra/`
+- `ai/scripts/prepare_sport_sonata_dataset.py`
+- `ai/training/colab_sport_sonata_lora.md`
+- `ai/datasets/processed/sport_sonata/`
