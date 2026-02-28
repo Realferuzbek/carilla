@@ -103,7 +103,11 @@
       z-index: 1;
       width: min(100%, 880px);
       margin: 0 auto;
-      padding: 2px 2px calc(130px + env(safe-area-inset-bottom));
+      padding: 2px 2px calc(20px + env(safe-area-inset-bottom));
+    }
+
+    body.has-action-bar .app-shell {
+      padding-bottom: calc(var(--rail-height) + 30px + env(safe-area-inset-bottom));
     }
 
     .glass {
@@ -577,9 +581,9 @@
     .action-bar {
       position: fixed;
       left: 50%;
-      transform: translateX(-50%);
+      transform: translateX(-50%) translateY(18px);
       bottom: max(10px, env(safe-area-inset-bottom));
-      width: min(calc(100% - 20px), 880px);
+      width: min(calc(100% - 16px), 880px);
       border-radius: 18px;
       padding: 8px;
       display: grid;
@@ -590,6 +594,28 @@
       background: linear-gradient(160deg, rgba(16, 26, 45, 0.88), rgba(10, 16, 30, 0.9));
       backdrop-filter: blur(16px);
       z-index: 5;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity 220ms ease, transform 220ms ease, visibility 0s linear 220ms;
+    }
+
+    .action-bar.is-visible {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+      transform: translateX(-50%) translateY(0);
+      transition: opacity 220ms ease, transform 220ms ease, visibility 0s linear 0s;
+    }
+
+    .action-bar.reveal,
+    body.is-loaded .action-bar.reveal {
+      transform: translateX(-50%) translateY(18px);
+    }
+
+    .action-bar.reveal.is-visible,
+    body.is-loaded .action-bar.reveal.is-visible {
+      transform: translateX(-50%) translateY(0);
     }
 
     .action-btn {
@@ -610,12 +636,17 @@
       gap: 4px;
       transition: transform 140ms ease, border-color 140ms ease, box-shadow 140ms ease, background 140ms ease, opacity 140ms ease;
       -webkit-tap-highlight-color: transparent;
+      min-width: 0;
     }
 
     .action-btn svg {
       width: 18px;
       height: 18px;
       stroke-width: 1.9;
+    }
+
+    .action-btn span {
+      white-space: nowrap;
     }
 
     .action-btn:disabled {
@@ -643,7 +674,7 @@
     .toast {
       position: fixed;
       left: 50%;
-      bottom: calc(98px + env(safe-area-inset-bottom));
+      bottom: calc(12px + env(safe-area-inset-bottom));
       transform: translate(-50%, 20px);
       min-width: min(88vw, 340px);
       max-width: min(92vw, 420px);
@@ -661,6 +692,10 @@
       transition: opacity 220ms ease, transform 220ms ease, visibility 0s linear 220ms;
       z-index: 12;
       text-align: center;
+    }
+
+    body.has-action-bar .toast {
+      bottom: calc(var(--rail-height) + 20px + env(safe-area-inset-bottom));
     }
 
     .toast.is-visible {
@@ -1046,7 +1081,7 @@
       }
 
       .action-bar {
-        width: calc(100% - 14px);
+        width: calc(100% - 16px);
         bottom: max(8px, env(safe-area-inset-bottom));
         padding: 7px;
         gap: 6px;
@@ -1063,7 +1098,11 @@
       }
 
       .app-shell {
-        padding-bottom: calc(136px + env(safe-area-inset-bottom));
+        padding-bottom: calc(20px + env(safe-area-inset-bottom));
+      }
+
+      body.has-action-bar .app-shell {
+        padding-bottom: calc(var(--rail-height) + 36px + env(safe-area-inset-bottom));
       }
 
       .studio-card,
@@ -1177,7 +1216,7 @@
       <p class="result-note">Use the slider to inspect original vs generated tuned output.</p>
     </section>
 
-    <nav class="action-bar glass reveal" aria-label="Result actions">
+    <nav id="actionBar" class="action-bar glass" aria-label="Result actions">
       <button id="saveAction" class="action-btn" type="button" aria-label="Save result" disabled>
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
           <path d="M6 4h10l4 4v12H4V4h2Z"></path>
@@ -1200,7 +1239,7 @@
           <path d="M4 10.5 12 4l8 6.5V20H4v-9.5Z"></path>
           <path d="M9 20v-5h6v5"></path>
         </svg>
-        <span>Save to Garage</span>
+        <span>Garage</span>
       </button>
       <button id="bookAction" class="action-btn" type="button" aria-label="Book" disabled>
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
@@ -1359,6 +1398,7 @@
         afterReveal: document.getElementById("afterReveal"),
         sliderDivider: document.getElementById("sliderDivider"),
         compareSlider: document.getElementById("compareSlider"),
+        actionBar: document.getElementById("actionBar"),
         saveAction: document.getElementById("saveAction"),
         shareAction: document.getElementById("shareAction"),
         garageAction: document.getElementById("garageAction"),
@@ -1424,6 +1464,7 @@
           && refs.afterReveal
           && refs.sliderDivider
           && refs.compareSlider
+          && refs.actionBar
           && refs.saveAction
           && refs.shareAction
           && refs.garageAction
@@ -1498,6 +1539,7 @@
         updatePhotoPreview();
         updateCompareView();
         setActionAvailability(false);
+        syncActionBarVisibility();
         updateGenerateState();
         setStatus("Select a style and add a photo to unlock generation.", "");
         refreshBookingLinks();
@@ -1545,13 +1587,14 @@
           state.generatedAt = "";
           state.activeGarageEntryId = null;
 
-          const sourceLabel = source === "camera" ? "camera" : "upload";
-          refs.photoMeta.textContent = `${file.name} (${formatFileSize(file.size)}) from ${sourceLabel}`;
+          const sourceText = source === "camera" ? "Camera photo" : "Uploaded photo";
+          refs.photoMeta.textContent = `${sourceText} • ${formatFileSize(file.size)}`;
 
           updatePhotoPreview();
           updateCompareView();
           updateGenerateState();
           setActionAvailability(false);
+          syncActionBarVisibility();
 
           if (state.selectedStyle) {
             setStatus(`Ready to generate ${styleLabels[state.selectedStyle]} preview.`, "");
@@ -1662,9 +1705,10 @@
         state.generatedAt = "";
         state.activeGarageEntryId = null;
         setActionAvailability(false);
+        syncActionBarVisibility();
         updateGenerateState();
         updateCompareView();
-        setStatus("Generating premium preview...", "");
+        setStatus(`Generating ${styleLabels[state.selectedStyle]} preview...`, "");
 
         const delayMs = 1200 + Math.floor(Math.random() * 801);
         const tunePromise = simulateTune(state.originalDataUrl, state.selectedStyle);
@@ -1677,6 +1721,7 @@
           refs.compareSlider.value = "50";
           updateCompareView();
           setActionAvailability(true);
+          syncActionBarVisibility();
           setStatus(`${styleLabels[state.selectedStyle]} preview generated.`, "good");
           refreshBookingLinks();
         } catch (error) {
@@ -1686,6 +1731,7 @@
           state.generatedAt = "";
           updateCompareView();
           setActionAvailability(false);
+          syncActionBarVisibility();
           showToast("Preview generation failed. Please try again.", "danger");
           setStatus("Preview generation failed.", "danger");
         } finally {
@@ -1856,6 +1902,13 @@
         actions.forEach((button) => {
           button.disabled = !enabled;
         });
+        syncActionBarVisibility();
+      }
+
+      function syncActionBarVisibility() {
+        const visible = state.resultReady === true;
+        refs.actionBar.classList.toggle("is-visible", visible);
+        document.body.classList.toggle("has-action-bar", visible);
       }
 
       function setStatus(message, tone) {
@@ -2064,6 +2117,7 @@
         updateCompareView();
         updateGenerateState();
         setActionAvailability(state.resultReady);
+        syncActionBarVisibility();
         setStatus(`${styleLabels[state.selectedStyle] || "Saved"} preview restored from Garage.`, "good");
         refreshBookingLinks();
         renderGarageList();
